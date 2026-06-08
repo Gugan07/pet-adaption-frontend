@@ -15,7 +15,7 @@ function PrivacyPage() {
       </div>
 
       <section className="policy-section">
-        <p>At PawHaven, we are committed to protecting your personal information and your right to privacy.</p>
+        <p>At PetSphere, we are committed to protecting your personal information and your right to privacy.</p>
 
         <h2>1. Information We Collect</h2>
         <p>We collect information you provide directly to us when you:</p>
@@ -41,7 +41,7 @@ function PrivacyPage() {
         <ul>
           <li>With your explicit consent</li>
           <li>To comply with legal obligations</li>
-          <li>To protect the rights and safety of PawHaven and its users</li>
+          <li>To protect the rights and safety of PetSphere and its users</li>
         </ul>
 
         <h2>4. Data Security</h2>
@@ -51,7 +51,7 @@ function PrivacyPage() {
         <p>We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. You can control cookie settings through your browser preferences.</p>
 
         <h2>6. Your Rights</h2>
-        <p>You have the right to access, update, or delete your personal information at any time. To exercise these rights, contact us at hello@pawhaven.com.</p>
+        <p>You have the right to access, update, or delete your personal information at any time. To exercise these rights, contact us at hello@petsphere.com.</p>
 
         <h2>7. Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please <Link to="/contact" style={{ color: 'var(--primary)' }}>contact us</Link>.</p>

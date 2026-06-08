@@ -54,7 +54,7 @@ function HomePage() {
 
       <section className="features">
         <div className="section-title">
-          <h2>Why Choose PawHaven?</h2>
+          <h2>Why Choose PetSphere?</h2>
           <p>We make pet adoption safe, easy, and joyful</p>
         </div>
         <div className="features-grid">

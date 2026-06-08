@@ -1,28 +1,55 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './css/style.css';
-
-const pets = [
-  { name: 'Charlie', type: 'Dog', img: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400', age: '2 Years', gender: '♂ Male', location: 'New York', breed: 'Labrador · Playful & friendly' },
-  { name: 'Milo',    type: 'Cat', img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=400', age: '1 Year',  gender: '♂ Male', location: 'Boston',   breed: 'Tabby Cat · Calm & cuddly' },
-  { name: 'Max',     type: 'Dog', img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=400', age: '3 Years', gender: '♂ Male', location: 'Chicago',  breed: 'German Shepherd · Loyal & smart' },
-  { name: 'Bella',   type: 'Cat', img: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=400', age: '2 Years', gender: '♀ Female', location: 'Austin', breed: 'Siamese Cat · Playful & vocal' },
-  { name: 'Daisy',   type: 'Dog', img: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=400', age: '1 Year',  gender: '♀ Female', location: 'Seattle', breed: 'Beagle · Energetic & sweet' },
-  { name: 'Cleo',    type: 'Cat', img: 'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=400', age: '4 Years', gender: '♀ Female', location: 'Miami',  breed: 'Persian Cat · Gentle & loving' },
-];
+import API_BASE from './api';
 
 const filters = ['All Pets', '🐶 Dogs', '🐱 Cats', '🐰 Rabbits', '🐦 Birds'];
 
 function AdoptionPage() {
   const [active, setActive] = useState('All Pets');
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [adopted, setAdopted] = useState({});
+  const [error, setError] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`${API_BASE}/pets`)
+      .then(r => r.json())
+      .then(d => { setPets(d.data || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const handleAdopt = async (pet) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) { navigate('/login'); return; }
+
+    try {
+      const res = await fetch(`${API_BASE}/adoption`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ petId: pet._id, userId: user._id, message: '' }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAdopted(prev => ({ ...prev, [pet._id]: true }));
+      } else {
+        setError(prev => ({ ...prev, [pet._id]: data.message }));
+      }
+    } catch {
+      setError(prev => ({ ...prev, [pet._id]: 'Server error. Try again.' }));
+    }
+  };
 
   const filtered = pets.filter(p => {
     if (active === 'All Pets') return true;
-    if (active === '🐶 Dogs') return p.type === 'Dog';
-    if (active === '🐱 Cats') return p.type === 'Cat';
-    return false;
+    if (active === '🐶 Dogs') return p.species === 'Dog';
+    if (active === '🐱 Cats') return p.species === 'Cat';
+    if (active === '🐰 Rabbits') return p.species === 'Rabbit';
+    if (active === '🐦 Birds') return p.species === 'Bird';
+    return true;
   });
 
   return (
@@ -40,26 +67,47 @@ function AdoptionPage() {
             <button key={f} className={`filter-btn${active === f ? ' active' : ''}`} onClick={() => setActive(f)}>{f}</button>
           ))}
         </div>
-        <div className="card-container">
-          {filtered.length > 0 ? filtered.map(pet => (
-            <div className="card" key={pet.name}>
-              <img src={pet.img} alt={pet.name} />
-              <div className="card-content">
-                <span className="card-badge">{pet.type}</span>
-                <h3>{pet.name}</h3>
-                <div className="pet-meta">
-                  <span className="pet-tag">🎂 {pet.age}</span>
-                  <span className="pet-tag">{pet.gender}</span>
-                  <span className="pet-tag">📍 {pet.location}</span>
+
+        {loading ? (
+          <p style={{ textAlign: 'center', color: 'var(--muted)', padding: '40px 0' }}>Loading pets...</p>
+        ) : (
+          <div className="card-container">
+            {filtered.length > 0 ? filtered.map(pet => (
+              <div className="card" key={pet._id}>
+                {pet.imageUrl && <img src={pet.imageUrl} alt={pet.petName} />}
+                <div className="card-content">
+                  <span className="card-badge">{pet.species}</span>
+                  <h3>{pet.petName}</h3>
+                  <div className="pet-meta">
+                    <span className="pet-tag">🎂 {pet.age}</span>
+                    <span className="pet-tag">{pet.gender}</span>
+                    <span className="pet-tag">📍 {pet.location}</span>
+                  </div>
+                  <p>{pet.breed}</p>
+
+                  {adopted[pet._id] ? (
+                    <div style={{ background: '#f0fdf4', color: '#16a34a', borderRadius: '10px', padding: '10px', fontSize: '14px', fontWeight: '600' }}>
+                      ✅ Adoption request submitted!
+                    </div>
+                  ) : (
+                    <>
+                      {error[pet._id] && (
+                        <p style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>{error[pet._id]}</p>
+                      )}
+                      <button className="btn btn-primary" onClick={() => handleAdopt(pet)}>
+                        Adopt {pet.petName}
+                      </button>
+                    </>
+                  )}
                 </div>
-                <p>{pet.breed}</p>
-                <Link to="/login" className="btn btn-primary">Adopt {pet.name}</Link>
               </div>
-            </div>
-          )) : (
-            <p style={{ color: 'var(--muted)', textAlign: 'center', width: '100%', padding: '40px 0' }}>No pets available in this category yet.</p>
-          )}
-        </div>
+            )) : (
+              <p style={{ color: 'var(--muted)', textAlign: 'center', width: '100%', padding: '40px 0' }}>
+                No pets available in this category yet. <Link to="/addpet">Add one!</Link>
+              </p>
+            )}
+          </div>
+        )}
       </section>
 
       <Footer />

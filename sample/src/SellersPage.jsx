@@ -46,7 +46,7 @@ function SellersPage() {
         </div>
 
         <div className="seller-cta">
-          <h2>Want to Sell on PawHaven?</h2>
+          <h2>Want to Sell on PetSphere?</h2>
           <p>Join our community of trusted sellers and reach thousands of pet lovers. It's free to get started.</p>
           <Link to="/addpet" className="btn btn-primary">Become a Seller</Link>
         </div>

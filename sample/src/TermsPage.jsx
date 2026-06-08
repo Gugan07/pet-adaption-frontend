@@ -11,11 +11,11 @@ function TermsPage() {
 
       <div className="page-header">
         <h1>Terms &amp; Conditions 📄</h1>
-        <p>Last updated: January 1, 2026. Please read these terms carefully before using PawHaven.</p>
+        <p>Last updated: January 1, 2026. Please read these terms carefully before using PetSphere.</p>
       </div>
 
       <section className="policy-section">
-        <p>By accessing or using PawHaven, you agree to be bound by these Terms and Conditions.</p>
+        <p>By accessing or using PetSphere, you agree to be bound by these Terms and Conditions.</p>
 
         <h2>1. Acceptance of Terms</h2>
         <p>By creating an account or using any part of our service, you confirm that you are at least 18 years old and agree to these terms.</p>
@@ -30,16 +30,16 @@ function TermsPage() {
         </ul>
 
         <h2>3. Adoption Policy</h2>
-        <p>Users who adopt pets through PawHaven agree to:</p>
+        <p>Users who adopt pets through PetSphere agree to:</p>
         <ul>
           <li>Provide a safe, loving, and appropriate home environment</li>
-          <li>Not resell or transfer the pet without notifying PawHaven</li>
+          <li>Not resell or transfer the pet without notifying PetSphere</li>
           <li>Complete all required adoption paperwork honestly</li>
           <li>Contact us if they are unable to care for the pet</li>
         </ul>
 
         <h2>4. Seller Responsibilities</h2>
-        <p>Sellers on PawHaven must:</p>
+        <p>Sellers on PetSphere must:</p>
         <ul>
           <li>Provide accurate descriptions and health information for all listed pets</li>
           <li>Ensure all pets are vaccinated and health-checked before listing</li>
@@ -56,10 +56,10 @@ function TermsPage() {
         </ul>
 
         <h2>6. Limitation of Liability</h2>
-        <p>PawHaven acts as a platform connecting buyers and sellers. We are not responsible for the actions of individual users.</p>
+        <p>PetSphere acts as a platform connecting buyers and sellers. We are not responsible for the actions of individual users.</p>
 
         <h2>7. Changes to Terms</h2>
-        <p>We reserve the right to update these terms at any time. Continued use of PawHaven after changes constitutes acceptance of the new terms.</p>
+        <p>We reserve the right to update these terms at any time. Continued use of PetSphere after changes constitutes acceptance of the new terms.</p>
 
         <h2>8. Contact</h2>
         <p>For questions about these terms, <Link to="/contact" style={{ color: 'var(--primary)' }}>contact us</Link>.</p>

@@ -10,7 +10,7 @@ function AboutPage() {
       <Navbar />
 
       <div className="page-header">
-        <h1>About PawHaven 🐾</h1>
+        <h1>About PetSphere 🐾</h1>
         <p>We're on a mission to connect every pet with a loving forever home.</p>
       </div>
 
@@ -20,7 +20,7 @@ function AboutPage() {
         </div>
         <div className="about-text">
           <h2>Our <span>Story</span> &amp; Mission</h2>
-          <p>PawHaven was founded in 2020 with a simple belief — every pet deserves a loving home. We started as a small local shelter and grew into a trusted platform connecting thousands of pet lovers with their perfect companions.</p>
+          <p>PetSphere was founded in 2020 with a simple belief — every pet deserves a loving home. We started as a small local shelter and grew into a trusted platform connecting thousands of pet lovers with their perfect companions.</p>
           <p>We work with verified sellers, rescue centers, and individual pet owners to ensure every adoption is safe, transparent, and joyful.</p>
           <ul className="about-list">
             <li>All pets are health-checked and vaccinated</li>

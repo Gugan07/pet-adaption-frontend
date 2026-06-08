@@ -13,6 +13,8 @@ import FAQPage from './FAQPage';
 import PrivacyPage from './PrivacyPage';
 import TermsPage from './TermsPage';
 
+import AdminPage from './AdminPage';
+
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +31,7 @@ function App() {
         <Route path="/faq"     element={<FAQPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms"   element={<TermsPage />} />
+        <Route path="/admin"   element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
   );

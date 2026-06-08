@@ -6,7 +6,7 @@ function Footer() {
     <footer>
       <div className="footer-grid">
         <div className="footer-brand">
-          <div className="nav-logo"><span>🐾</span> PawHaven</div>
+          <div className="nav-logo"><span>🐾</span> PetSphere</div>
           <p>Connecting loving families with pets who need a home. Adopt, care, and love.</p>
         </div>
         <div className="footer-col">
@@ -38,7 +38,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2026 PawHaven Pet Shop. All rights reserved.</p>
+        <p>© 2026 PetSphere Pet Shop. All rights reserved.</p>
         <div style={{ display: 'flex', gap: '20px' }}>
           <Link to="/privacy">Privacy</Link>
           <Link to="/terms">Terms</Link>
