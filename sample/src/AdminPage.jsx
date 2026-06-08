@@ -12,6 +12,7 @@ function AdminPage() {
   const [adoptions, setAdoptions] = useState([]);
   const [pets, setPets] = useState([]);
   const [contacts, setContacts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -23,14 +24,16 @@ function AdminPage() {
 
   const fetchAll = async () => {
     setLoading(true);
-    const [a, p, c] = await Promise.all([
+    const [a, p, c, u] = await Promise.all([
       fetch(`${API}/adoption`).then(r => r.json()),
       fetch(`${API}/pets`).then(r => r.json()),
       fetch(`${API}/contact`).then(r => r.json()),
+      fetch(`${API}/user`).then(r => r.json()),
     ]);
     setAdoptions(a.data || []);
     setPets(p.data || []);
     setContacts(c.data || []);
+    setUsers(u.data || []);
     setLoading(false);
   };
 
@@ -49,7 +52,12 @@ function AdminPage() {
     setPets(prev => prev.filter(p => p._id !== id));
   };
 
-  const deleteContact = async (id) => {
+  const deleteUser = async (id) => {
+    if (!window.confirm('Delete this user?')) return;
+    await fetch(`${API}/user/${id}`, { method: 'DELETE' });
+    setUsers(prev => prev.filter(u => u._id !== id));
+  };
+
     await fetch(`${API}/contact/${id}`, { method: 'DELETE' });
     setContacts(prev => prev.filter(c => c._id !== id));
   };
@@ -77,6 +85,7 @@ function AdminPage() {
             { label: 'Adoption Requests', value: adoptions.length, icon: '📋' },
             { label: 'Pending', value: adoptions.filter(a => a.status === 'pending').length, icon: '⏳' },
             { label: 'Messages', value: contacts.length, icon: '✉️' },
+            { label: 'Users', value: users.length, icon: '👥' },
           ].map(s => (
             <div key={s.label} style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: '24px 32px', boxShadow: 'var(--shadow)', flex: '1', minWidth: '160px', textAlign: 'center' }}>
               <div style={{ fontSize: '32px' }}>{s.icon}</div>
@@ -88,9 +97,9 @@ function AdminPage() {
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: '12px', marginBottom: '28px' }}>
-          {['adoptions', 'pets', 'contacts'].map(t => (
+          {['adoptions', 'pets', 'contacts', 'users'].map(t => (
             <button key={t} onClick={() => setTab(t)} className={`filter-btn${tab === t ? ' active' : ''}`} style={{ textTransform: 'capitalize' }}>
-              {t === 'adoptions' ? '📋 Adoptions' : t === 'pets' ? '🐾 Pets' : '✉️ Messages'}
+              {t === 'adoptions' ? '📋 Adoptions' : t === 'pets' ? '🐾 Pets' : t === 'contacts' ? '✉️ Messages' : '👥 Users'}
             </button>
           ))}
         </div>
@@ -149,6 +158,25 @@ function AdminPage() {
                       <p>{pet.breed}</p>
                       <button className="btn" style={{ width: '100%', background: '#fef2f2', color: '#dc2626', border: '1px solid #fecaca', marginTop: '8px' }} onClick={() => deletePet(pet._id)}>🗑️ Remove Listing</button>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )
+
+          ) : tab === 'users' ? (
+            users.length === 0 ? (
+              <p style={{ color: 'var(--muted)', textAlign: 'center', padding: '40px' }}>No users registered yet.</p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {users.map(u => (
+                  <div key={u._id} style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: '24px', boxShadow: 'var(--shadow)', display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', flexShrink: 0 }}>👤</div>
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '4px' }}>{u.firstname} {u.lastname}</h3>
+                      <p style={{ color: 'var(--muted)', fontSize: '14px' }}>✉️ {u.email}</p>
+                      <p style={{ color: 'var(--muted)', fontSize: '13px' }}>🔖 Role: {u.role}</p>
+                    </div>
+                    <button className="btn" style={{ padding: '8px 18px', fontSize: '14px', background: '#fef2f2', color: '#dc2626', border: '1px solid #fecaca', flexShrink: 0 }} onClick={() => deleteUser(u._id)}>🗑️ Delete</button>
                   </div>
                 ))}
               </div>
