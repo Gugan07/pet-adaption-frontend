@@ -58,6 +58,8 @@ function AdminPage() {
     setUsers(prev => prev.filter(u => u._id !== id));
   };
 
+  const deleteContact = async (id) => {
+    if (!window.confirm('Delete this message?')) return;
     await fetch(`${API}/contact/${id}`, { method: 'DELETE' });
     setContacts(prev => prev.filter(c => c._id !== id));
   };
