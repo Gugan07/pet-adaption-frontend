@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  React.useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import AdoptionPage from './AdoptionPage';
@@ -18,6 +24,7 @@ import AdminPage from './AdminPage';
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/"        element={<HomePage />} />
         <Route path="/about"   element={<AboutPage />} />

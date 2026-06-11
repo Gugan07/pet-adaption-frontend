@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
 import './css/style.css';
 import API_BASE from './api';
 
@@ -53,7 +52,6 @@ function SignupPage() {
 
   return (
     <>
-      <Navbar />
       <div className="auth-wrapper">
         <div className="auth-card">
           <div className="auth-logo"><span>🐾</span> PetSphere</div>

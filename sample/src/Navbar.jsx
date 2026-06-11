@@ -5,7 +5,7 @@ function Navbar() {
   const { pathname } = useLocation();
   return (
     <nav>
-      <div className="nav-logo"><span>🐾</span> PetSphere</div>
+      <div className="nav-logo"><Link to="/"><span>🐾</span> PetSphere</Link></div>
       <ul>
         <li><Link to="/" className={pathname === '/' ? 'active' : ''}>Home</Link></li>
         <li><Link to="/about" className={pathname === '/about' ? 'active' : ''}>About</Link></li>
