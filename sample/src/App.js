@@ -1,11 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  React.useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
-  return null;
-}
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import AdoptionPage from './AdoptionPage';
@@ -18,8 +12,13 @@ import AddPetPage from './AddPetPage';
 import FAQPage from './FAQPage';
 import PrivacyPage from './PrivacyPage';
 import TermsPage from './TermsPage';
-
 import AdminPage from './AdminPage';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  React.useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 function App() {
   return (
